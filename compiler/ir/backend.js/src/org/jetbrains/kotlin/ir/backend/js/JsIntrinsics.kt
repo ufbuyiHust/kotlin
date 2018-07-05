@@ -88,11 +88,6 @@ class JsIntrinsics(
     val jsInstanceOf = binOpBool("jsInstanceOf")
     val jsTypeOf = unOp("jsTypeOf", irBuiltIns.string)
 
-    val jsGetContinuation = context.run {
-        val f = getInternalFunctions("getContinuation")
-        symbolTable.referenceSimpleFunction(f.single())
-    }
-
     // Number conversions:
 
     val jsAsIs = getInternalFunction("asIs")  // as-is conversion. Call can be replaced with first paramenter
@@ -115,6 +110,14 @@ class JsIntrinsics(
     val jsCompareTo = getInternalFunction("compareTo")
     val jsEquals = getInternalFunction("equals")
 
+    // Coroutines
+
+    val jsCoroutineContext = context.symbolTable.referenceFunction(context.coroutineContextProperty.getter!!)
+
+    val jsGetContinuation = context.run {
+        val f = getInternalFunctions("getContinuation")
+        symbolTable.referenceSimpleFunction(f.single())
+    }
 
 
     // Helpers:

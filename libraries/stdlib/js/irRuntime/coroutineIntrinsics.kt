@@ -31,7 +31,7 @@ public suspend fun <T> suspendCoroutineUninterceptedOrReturn(block: (Continuatio
 @kotlin.internal.InlineOnly
 public inline fun <T> Continuation<T>.intercepted(): Continuation<T> {
     val self = this
-    return js("self_0.facade").unsafeCast<Continuation<T>>()
+    return js("self_0.get_facade()").unsafeCast<Continuation<T>>()
 }
 
 /**
@@ -48,7 +48,10 @@ public val COROUTINE_SUSPENDED: Any = Any()
 public inline fun <T> (suspend () -> T).startCoroutineUninterceptedOrReturn(
     completion: Continuation<T>
 ): Any? {
-    return (this as Function1<Continuation<T>, Any?>).invoke(completion)
+    val self_0 = this
+    val cmpt_0 = completion
+    return js("self_0.invoke(cmpt_0)").unsafeCast<Any?>()
+//    return (this as Function1<Continuation<T>, Any?>).invoke(completion)
 }
 
 @SinceKotlin("1.1")

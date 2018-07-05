@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.backend.common.ir.Symbols
 import org.jetbrains.kotlin.backend.js.JsDescriptorsFactory
 import org.jetbrains.kotlin.descriptors.ClassDescriptor
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
+import org.jetbrains.kotlin.descriptors.PropertyDescriptor
 import org.jetbrains.kotlin.incremental.components.NoLookupLocation
 import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.backend.js.lower.inline.ModuleIndex
@@ -54,6 +55,7 @@ class JsIrBackendContext(
     private val coroutinePackageNameSrting = "kotlin.coroutines.experimental"
     private val intrinsicsPackageName = Name.identifier("intrinsics")
     private val COROUTINE_SUSPENDED_NAME = Name.identifier("COROUTINE_SUSPENDED")
+    private val COROUTINE_CONTEXT_NAME = Name.identifier("coroutineContext")
     private val COROUTINE_IMPL_NAME = Name.identifier("CoroutineImpl")
 
     private val coroutinePackageName = FqName(coroutinePackageNameSrting)
@@ -61,6 +63,15 @@ class JsIrBackendContext(
 
     private val coroutinePackage = module.getPackage(coroutinePackageName)
     private val coroutineIntrinsicsPackage = module.getPackage(coroutineIntrinsicsPackageName)
+
+    val coroutineContextProperty: PropertyDescriptor
+        get() {
+            val vars = coroutinePackage.memberScope.getContributedVariables(
+                COROUTINE_CONTEXT_NAME,
+                NoLookupLocation.FROM_BACKEND
+            )
+            return vars.single()
+        }
 
     val intrinsics = JsIntrinsics(module, irBuiltIns, this)
 

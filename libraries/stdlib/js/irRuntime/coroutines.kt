@@ -261,11 +261,14 @@ internal abstract class CoroutineImpl(private val completion: Continuation<Any?>
     protected var pendingResult: dynamic = null
 //    protected var finallyPath: Array<Int>? = null
 
-    public override val context: CoroutineContext = completion?.context
+    public override val context: CoroutineContext get() = completion?.context
 
-    val facade: Continuation<Any?> = this
+//    val facade: Continuation<Any?> = this
 
-//    val facade: Continuation<Any?> = context[ContinuationInterceptor]?.interceptContinuation(this) ?: this
+    val facade: Continuation<Any?> get() {
+        return if (context != null) context[ContinuationInterceptor]?.interceptContinuation(this) ?: this
+        else this
+    }
 
     override fun resume(value: Any?) {
 //        result = value
@@ -379,3 +382,10 @@ internal inline fun processBareContinuationResume(completion: Continuation<*>, b
         completion.resumeWithException(t)
     }
 }
+
+@SinceKotlin("1.2")
+@Suppress("WRONG_MODIFIER_TARGET")
+public suspend  val coroutineContext: CoroutineContext
+    get() {
+        throw Exception("Implemented as intrinsic")
+    }

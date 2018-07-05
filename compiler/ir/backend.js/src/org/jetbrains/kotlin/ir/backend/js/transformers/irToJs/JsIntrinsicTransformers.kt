@@ -130,6 +130,11 @@ class JsIntrinsicTransformers(backendContext: JsIrBackendContext) {
             add(intrinsics.jsGetContinuation) { _, context: JsGenerationContext ->
                 context.getContinuation()
             }
+
+            add(intrinsics.jsCoroutineContext) { _, context: JsGenerationContext ->
+                val continuation = context.getContinuation()
+                JsInvocation(JsNameRef("get_context", continuation))
+            }
         }
     }
 

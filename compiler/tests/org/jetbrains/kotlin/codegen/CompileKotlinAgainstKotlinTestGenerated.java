@@ -272,4 +272,22 @@ public class CompileKotlinAgainstKotlinTestGenerated extends AbstractCompileKotl
     public void testTypeAliasesKt13181() throws Exception {
         runTest("compiler/testData/compileKotlinAgainstKotlin/typeAliasesKt13181.kt");
     }
+
+    @TestMetadata("compiler/testData/compileKotlinAgainstKotlin/coroutines")
+    @TestDataPath("$PROJECT_ROOT")
+    @RunWith(JUnit3RunnerWithInners.class)
+    public static class Coroutines extends AbstractCompileKotlinAgainstKotlinTest {
+        private void runTest(String testDataFilePath) throws Exception {
+            KotlinTestUtils.runTest(this::doTest, TargetBackend.ANY, testDataFilePath);
+        }
+
+        public void testAllFilesPresentInCoroutines() throws Exception {
+            KotlinTestUtils.assertAllTestsPresentByMetadata(this.getClass(), new File("compiler/testData/compileKotlinAgainstKotlin/coroutines"), Pattern.compile("^(.+)\\.kt$"), TargetBackend.ANY, true);
+        }
+
+        @TestMetadata("simple.kt")
+        public void testSimple() throws Exception {
+            runTest("compiler/testData/compileKotlinAgainstKotlin/coroutines/simple.kt");
+        }
+    }
 }

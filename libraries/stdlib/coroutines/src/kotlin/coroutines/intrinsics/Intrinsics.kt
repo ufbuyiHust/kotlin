@@ -30,6 +30,7 @@ import kotlin.coroutines.*
  */
 @SinceKotlin("1.3")
 @kotlin.internal.InlineOnly
+@kotlin.internal.RequireKotlin("1.3")
 @Suppress("UNUSED_PARAMETER")
 public suspend inline fun <T> suspendCoroutineOrReturn(crossinline block: (Continuation<T>) -> Any?): T =
     suspendCoroutineUninterceptedOrReturn { cont -> block(cont.intercepted()) }
@@ -42,6 +43,7 @@ public suspend inline fun <T> suspendCoroutineOrReturn(crossinline block: (Conti
  */
 @SinceKotlin("1.3")
 @kotlin.internal.InlineOnly
+@kotlin.internal.RequireKotlin("1.3")
 public suspend inline fun <T> suspendCoroutineUninterceptedOrReturn(crossinline block: (Continuation<T>) -> Any?): T =
     throw NotImplementedError("Implementation of suspendCoroutineUninterceptedOrReturn is intrinsic")
 

@@ -78,6 +78,7 @@ public fun <T> (suspend () -> T).createCoroutine(
  * from a different thread of execution. Repeated invocation of any resume function produces [IllegalStateException].
  */
 @SinceKotlin("1.3")
+@kotlin.internal.RequireKotlin("1.3")
 public suspend inline fun <T> suspendCoroutine(crossinline block: (Continuation<T>) -> Unit): T =
     suspendCoroutineOrReturn { c: Continuation<T> ->
         val safe = SafeContinuation(c)

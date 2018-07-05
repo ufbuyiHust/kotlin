@@ -357,6 +357,8 @@ class StateMachineBuilder(
             branches = expression.branches
         }
 
+        val rootBlock = currentBlock
+
         for (branch in branches) {
             if (branch !is IrElseBranch) {
                 branch.condition.acceptVoid(this)
@@ -372,8 +374,8 @@ class StateMachineBuilder(
                 currentBlock = branchBlock
                 branch.result.acceptVoid(this)
 
+                doDispatch(exitState)
                 if (currentState != ifState) {
-                    doDispatch(exitState)
                     currentState = ifState
                 }
                 currentBlock = elseBlock

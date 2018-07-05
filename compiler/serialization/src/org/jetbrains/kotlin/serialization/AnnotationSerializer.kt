@@ -127,21 +127,25 @@ class AnnotationSerializer(private val stringTable: DescriptorAwareStringTable) 
             override fun visitUByteValue(value: UByteValue, data: Unit?) {
                 type = Type.BYTE
                 intValue = value.value.toLong()
+                isUnsigned = true
             }
 
             override fun visitUShortValue(value: UShortValue, data: Unit?) {
                 type = Type.SHORT
                 intValue = value.value.toLong()
+                isUnsigned = true
             }
 
             override fun visitUIntValue(value: UIntValue, data: Unit?) {
                 type = Type.INT
                 intValue = value.value.toLong()
+                isUnsigned = true
             }
 
             override fun visitULongValue(value: ULongValue, data: Unit?) {
                 type = Type.LONG
                 intValue = value.value
+                isUnsigned = true
             }
         }, Unit)
     }

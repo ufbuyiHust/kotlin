@@ -2200,6 +2200,15 @@ public final class ProtoBuf {
          * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
          */
         int getArrayElementCount();
+
+        /**
+         * <code>optional bool is_unsigned = 10 [default = false];</code>
+         */
+        boolean hasIsUnsigned();
+        /**
+         * <code>optional bool is_unsigned = 10 [default = false];</code>
+         */
+        boolean getIsUnsigned();
       }
       /**
        * Protobuf type {@code org.jetbrains.kotlin.metadata.Annotation.Argument.Value}
@@ -2312,6 +2321,11 @@ public final class ProtoBuf {
                     mutable_bitField0_ |= 0x00000100;
                   }
                   arrayElement_.add(input.readMessage(org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value.PARSER, extensionRegistry));
+                  break;
+                }
+                case 80: {
+                  bitField0_ |= 0x00000100;
+                  isUnsigned_ = input.readBool();
                   break;
                 }
               }
@@ -2681,6 +2695,21 @@ public final class ProtoBuf {
           return arrayElement_.get(index);
         }
 
+        public static final int IS_UNSIGNED_FIELD_NUMBER = 10;
+        private boolean isUnsigned_;
+        /**
+         * <code>optional bool is_unsigned = 10 [default = false];</code>
+         */
+        public boolean hasIsUnsigned() {
+          return ((bitField0_ & 0x00000100) == 0x00000100);
+        }
+        /**
+         * <code>optional bool is_unsigned = 10 [default = false];</code>
+         */
+        public boolean getIsUnsigned() {
+          return isUnsigned_;
+        }
+
         private void initFields() {
           type_ = org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value.Type.BYTE;
           intValue_ = 0L;
@@ -2691,6 +2720,7 @@ public final class ProtoBuf {
           enumValueId_ = 0;
           annotation_ = org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.getDefaultInstance();
           arrayElement_ = java.util.Collections.emptyList();
+          isUnsigned_ = false;
         }
         private byte memoizedIsInitialized = -1;
         public final boolean isInitialized() {
@@ -2744,6 +2774,9 @@ public final class ProtoBuf {
           for (int i = 0; i < arrayElement_.size(); i++) {
             output.writeMessage(9, arrayElement_.get(i));
           }
+          if (((bitField0_ & 0x00000100) == 0x00000100)) {
+            output.writeBool(10, isUnsigned_);
+          }
           output.writeRawBytes(unknownFields);
         }
 
@@ -2788,6 +2821,10 @@ public final class ProtoBuf {
           for (int i = 0; i < arrayElement_.size(); i++) {
             size += org.jetbrains.kotlin.protobuf.CodedOutputStream
               .computeMessageSize(9, arrayElement_.get(i));
+          }
+          if (((bitField0_ & 0x00000100) == 0x00000100)) {
+            size += org.jetbrains.kotlin.protobuf.CodedOutputStream
+              .computeBoolSize(10, isUnsigned_);
           }
           size += unknownFields.size();
           memoizedSerializedSize = size;
@@ -2901,6 +2938,8 @@ public final class ProtoBuf {
             bitField0_ = (bitField0_ & ~0x00000080);
             arrayElement_ = java.util.Collections.emptyList();
             bitField0_ = (bitField0_ & ~0x00000100);
+            isUnsigned_ = false;
+            bitField0_ = (bitField0_ & ~0x00000200);
             return this;
           }
 
@@ -2961,6 +3000,10 @@ public final class ProtoBuf {
               bitField0_ = (bitField0_ & ~0x00000100);
             }
             result.arrayElement_ = arrayElement_;
+            if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
+              to_bitField0_ |= 0x00000100;
+            }
+            result.isUnsigned_ = isUnsigned_;
             result.bitField0_ = to_bitField0_;
             return result;
           }
@@ -3000,6 +3043,9 @@ public final class ProtoBuf {
                 arrayElement_.addAll(other.arrayElement_);
               }
               
+            }
+            if (other.hasIsUnsigned()) {
+              setIsUnsigned(other.getIsUnsigned());
             }
             setUnknownFields(
                 getUnknownFields().concat(other.unknownFields));
@@ -3490,6 +3536,38 @@ public final class ProtoBuf {
             ensureArrayElementIsMutable();
             arrayElement_.remove(index);
 
+            return this;
+          }
+
+          private boolean isUnsigned_ ;
+          /**
+           * <code>optional bool is_unsigned = 10 [default = false];</code>
+           */
+          public boolean hasIsUnsigned() {
+            return ((bitField0_ & 0x00000200) == 0x00000200);
+          }
+          /**
+           * <code>optional bool is_unsigned = 10 [default = false];</code>
+           */
+          public boolean getIsUnsigned() {
+            return isUnsigned_;
+          }
+          /**
+           * <code>optional bool is_unsigned = 10 [default = false];</code>
+           */
+          public Builder setIsUnsigned(boolean value) {
+            bitField0_ |= 0x00000200;
+            isUnsigned_ = value;
+            
+            return this;
+          }
+          /**
+           * <code>optional bool is_unsigned = 10 [default = false];</code>
+           */
+          public Builder clearIsUnsigned() {
+            bitField0_ = (bitField0_ & ~0x00000200);
+            isUnsigned_ = false;
+            
             return this;
           }
 

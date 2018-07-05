@@ -990,6 +990,11 @@ open class ProtoCompareGenerated(val oldNameResolver: NameResolver, val newNameR
 
         if (!checkEqualsAnnotationArgumentValueArrayElement(old, new)) return false
 
+        if (old.hasIsUnsigned() != new.hasIsUnsigned()) return false
+        if (old.hasIsUnsigned()) {
+            if (old.isUnsigned != new.isUnsigned) return false
+        }
+
         return true
     }
 
@@ -2118,6 +2123,10 @@ fun ProtoBuf.Annotation.Argument.Value.hashCode(stringIndexes: (Int) -> Int, fqN
 
     for(i in 0..arrayElementCount - 1) {
         hashCode = 31 * hashCode + getArrayElement(i).hashCode(stringIndexes, fqNameIndexes)
+    }
+
+    if (hasIsUnsigned()) {
+        hashCode = 31 * hashCode + isUnsigned.hashCode()
     }
 
     return hashCode

@@ -27,7 +27,8 @@ internal constructor(
 
     init {
         require((x or y or z or w or v) != 0) { "Initial state must have at least one non-zero element." }
-        // discard first 64
+
+        // some trivial seeds can produce several values with zeroes in upper bits, so we discard first 64
         repeat(64) { nextInt() }
     }
 

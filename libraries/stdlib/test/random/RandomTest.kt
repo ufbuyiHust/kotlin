@@ -300,17 +300,18 @@ abstract class RandomSmokeTest {
         assertFailsWith<IllegalArgumentException> { subject.nextBytes(array, 0, size + 10) }
         assertFailsWith<IllegalArgumentException> { subject.nextBytes(array, 10, 0) }
 
-        val rangeSize = 10
-        val position = 20
         repeat(100) {
+            val from = subject.nextInt(0, size - 1)
+            val to = subject.nextInt(from + 1, size)
+
             val prev = array.copyOf()
-            subject.nextBytes(array, position, position + rangeSize)
-            assertFalse(array contentEquals prev)
-            for (p in 0 until position) {
-                assertEquals(0, array[p])
+            subject.nextBytes(array, from, to)
+            assertFalse(array contentEquals prev, "Something should have changed in array after subrange randomization")
+            for (p in 0 until from) {
+                assertEquals(prev[p], array[p])
             }
-            for (p in position + rangeSize until size) {
-                assertEquals(0, array[p])
+            for (p in to until size) {
+                assertEquals(prev[p], array[p])
             }
         }
     }

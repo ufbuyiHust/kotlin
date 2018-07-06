@@ -195,6 +195,8 @@ public abstract class Random {
      *
      * Generates a `Double` random value uniformly distributed between the specified [origin] (inclusive) and the specified [bound] (exclusive).
      *
+     * [origin] and [bound] must be finite otherwise the behavior is unspecified.
+     *
      * @throws IllegalArgumentException if [origin] is greater than or equal to [bound].
      */
     public open fun nextDouble(origin: Double, bound: Double): Double {

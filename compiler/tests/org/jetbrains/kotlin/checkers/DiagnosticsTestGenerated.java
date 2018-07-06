@@ -17852,33 +17852,58 @@ public class DiagnosticsTestGenerated extends AbstractDiagnosticsTest {
                             KotlinTestUtils.runTest(this::doTest, TargetBackend.ANY, testDataFilePath);
                         }
 
-                        @TestMetadata("accessToStaticMembersOfParentClass.kt")
-                        public void testAccessToStaticMembersOfParentClass() throws Exception {
-                            runTest("compiler/testData/diagnostics/tests/scopes/inheritance/statics/companionObject/accessToStaticMembersOfParentClass.kt");
+                        @TestMetadata("accessToStaticMembersOfParentClassJKJ_after.kt")
+                        public void testAccessToStaticMembersOfParentClassJKJ_after() throws Exception {
+                            runTest("compiler/testData/diagnostics/tests/scopes/inheritance/statics/companionObject/accessToStaticMembersOfParentClassJKJ_after.kt");
                         }
 
-                        @TestMetadata("accessToStaticMembersOfParentClassJKJ.kt")
-                        public void testAccessToStaticMembersOfParentClassJKJ() throws Exception {
-                            runTest("compiler/testData/diagnostics/tests/scopes/inheritance/statics/companionObject/accessToStaticMembersOfParentClassJKJ.kt");
+                        @TestMetadata("accessToStaticMembersOfParentClassJKJ_before.kt")
+                        public void testAccessToStaticMembersOfParentClassJKJ_before() throws Exception {
+                            runTest("compiler/testData/diagnostics/tests/scopes/inheritance/statics/companionObject/accessToStaticMembersOfParentClassJKJ_before.kt");
+                        }
+
+                        @TestMetadata("accessToStaticMembersOfParentClass_after.kt")
+                        public void testAccessToStaticMembersOfParentClass_after() throws Exception {
+                            runTest("compiler/testData/diagnostics/tests/scopes/inheritance/statics/companionObject/accessToStaticMembersOfParentClass_after.kt");
+                        }
+
+                        @TestMetadata("accessToStaticMembersOfParentClass_before.kt")
+                        public void testAccessToStaticMembersOfParentClass_before() throws Exception {
+                            runTest("compiler/testData/diagnostics/tests/scopes/inheritance/statics/companionObject/accessToStaticMembersOfParentClass_before.kt");
                         }
 
                         public void testAllFilesPresentInCompanionObject() throws Exception {
                             KotlinTestUtils.assertAllTestsPresentByMetadata(this.getClass(), new File("compiler/testData/diagnostics/tests/scopes/inheritance/statics/companionObject"), Pattern.compile("^(.+)\\.kt$"), TargetBackend.ANY, true);
                         }
 
-                        @TestMetadata("inheritFromContainingClass.kt")
-                        public void testInheritFromContainingClass() throws Exception {
-                            runTest("compiler/testData/diagnostics/tests/scopes/inheritance/statics/companionObject/inheritFromContainingClass.kt");
+                        @TestMetadata("inheritFromContainingClass_after.kt")
+                        public void testInheritFromContainingClass_after() throws Exception {
+                            runTest("compiler/testData/diagnostics/tests/scopes/inheritance/statics/companionObject/inheritFromContainingClass_after.kt");
                         }
 
-                        @TestMetadata("inheritFromJava.kt")
-                        public void testInheritFromJava() throws Exception {
-                            runTest("compiler/testData/diagnostics/tests/scopes/inheritance/statics/companionObject/inheritFromJava.kt");
+                        @TestMetadata("inheritFromContainingClass_before.kt")
+                        public void testInheritFromContainingClass_before() throws Exception {
+                            runTest("compiler/testData/diagnostics/tests/scopes/inheritance/statics/companionObject/inheritFromContainingClass_before.kt");
                         }
 
-                        @TestMetadata("inheritFromJavaAfterKotlin.kt")
-                        public void testInheritFromJavaAfterKotlin() throws Exception {
-                            runTest("compiler/testData/diagnostics/tests/scopes/inheritance/statics/companionObject/inheritFromJavaAfterKotlin.kt");
+                        @TestMetadata("inheritFromJavaAfterKotlin_after.kt")
+                        public void testInheritFromJavaAfterKotlin_after() throws Exception {
+                            runTest("compiler/testData/diagnostics/tests/scopes/inheritance/statics/companionObject/inheritFromJavaAfterKotlin_after.kt");
+                        }
+
+                        @TestMetadata("inheritFromJavaAfterKotlin_before.kt")
+                        public void testInheritFromJavaAfterKotlin_before() throws Exception {
+                            runTest("compiler/testData/diagnostics/tests/scopes/inheritance/statics/companionObject/inheritFromJavaAfterKotlin_before.kt");
+                        }
+
+                        @TestMetadata("inheritFromJava_after.kt")
+                        public void testInheritFromJava_after() throws Exception {
+                            runTest("compiler/testData/diagnostics/tests/scopes/inheritance/statics/companionObject/inheritFromJava_after.kt");
+                        }
+
+                        @TestMetadata("inheritFromJava_before.kt")
+                        public void testInheritFromJava_before() throws Exception {
+                            runTest("compiler/testData/diagnostics/tests/scopes/inheritance/statics/companionObject/inheritFromJava_before.kt");
                         }
                     }
                 }

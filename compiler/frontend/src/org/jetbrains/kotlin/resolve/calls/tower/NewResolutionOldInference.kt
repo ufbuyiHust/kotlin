@@ -596,6 +596,8 @@ internal fun reportResolvedUsingDeprecatedVisibility(
     val descriptorToLookup: DeclarationDescriptor = when (candidateDescriptor) {
         is ClassConstructorDescriptor -> candidateDescriptor.containingDeclaration
         is FakeCallableDescriptorForObject -> candidateDescriptor.classDescriptor
+        is PropertyDescriptor -> candidateDescriptor
+        is FunctionDescriptor -> candidateDescriptor
         else -> error(
             "Unexpected candidate descriptor of resolved call with " +
                     "ResolvedUsingDeprecatedVisibility-diagnostic: $candidateDescriptor\n" +

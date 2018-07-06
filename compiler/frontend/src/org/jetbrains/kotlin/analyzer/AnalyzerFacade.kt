@@ -246,8 +246,12 @@ class ResolverForProjectImpl<M : ModuleInfo>(
 
     private fun createModuleDescriptor(module: M): ModuleData {
         val moduleDescriptor = ModuleDescriptorImpl(
-            module.name,
-            projectContext.storageManager, builtIns, modulePlatforms(module), module.capabilities
+            Name.special("<${module.displayedName}>"),
+            projectContext.storageManager,
+            builtIns,
+            modulePlatforms(module),
+            module.capabilities,
+            module.name
         )
         moduleInfoByDescriptor[moduleDescriptor] = module
         setupModuleDescriptor(module, moduleDescriptor)

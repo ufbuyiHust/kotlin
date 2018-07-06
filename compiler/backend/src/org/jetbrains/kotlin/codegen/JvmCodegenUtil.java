@@ -281,7 +281,7 @@ public class JvmCodegenUtil {
 
     @NotNull
     public static String getModuleName(ModuleDescriptor module) {
-        return StringsKt.removeSurrounding(module.getName().asString(), "<", ">");
+        return StringsKt.removeSurrounding(module.getStableName().asString(), "<", ">");
     }
 
     @NotNull

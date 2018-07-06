@@ -35,7 +35,9 @@ class ModuleDescriptorImpl @JvmOverloads constructor(
     override val builtIns: KotlinBuiltIns,
     // May be null in compiler context, should be not-null in IDE context
     multiTargetPlatform: MultiTargetPlatform? = null,
-    capabilities: Map<ModuleDescriptor.Capability<*>, Any?> = emptyMap()
+    capabilities: Map<ModuleDescriptor.Capability<*>, Any?> = emptyMap(),
+    // In case 'moduleName' isn't stable, 'stableName' should be provided by caller explicitly
+    override val stableName: Name = moduleName
 ) : DeclarationDescriptorImpl(Annotations.EMPTY, moduleName), ModuleDescriptor {
     init {
         if (!moduleName.isSpecial) {

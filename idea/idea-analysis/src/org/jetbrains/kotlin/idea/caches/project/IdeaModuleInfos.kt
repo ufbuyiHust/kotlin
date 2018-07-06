@@ -159,6 +159,9 @@ data class ModuleProductionSourceInfo internal constructor(
 
     override val name = module.getStableName()
 
+    override val displayedName: String
+        get() = module.name + " (production)"
+
     override fun contentScope(): GlobalSearchScope = ModuleProductionSourceScope(module)
 
     override fun <T> createCachedValueProvider(f: () -> CachedValueProvider.Result<T>) = CachedValueProvider { f() }

@@ -20,15 +20,18 @@ abstract class RandomSmokeTest {
 
         for (bitCount in 1..32) {
             val upperBitCount = 32 - bitCount
-            var result = 0
+            var result1 = 0
+            var result2 = -1
             repeat(1000) {
                 val bits = subject.nextBits(bitCount)
-                result = result or bits
+                result1 = result1 or bits
+                result2 = result2 and bits
 
                 assertEquals(0, bits.ushr(bitCount - 1).ushr(1), "Upper $upperBitCount bits should be zero")
             }
 
-            assertEquals(1.shl(bitCount - 1).shl(1) - 1, result, "Lower $bitCount bits should be filled")
+            assertEquals(1.shl(bitCount - 1).shl(1) - 1, result1, "Lower $bitCount bits should be filled")
+            assertEquals(0, result2, "All zero bits should present")
         }
     }
 
@@ -327,7 +330,7 @@ class SeededRandomSmokeTest : RandomSmokeTest() {
 
     @Test
     fun sameIntSeed() {
-        val v = subject.nextInt(1, Int.MAX_VALUE)
+        val v = subject.nextInt(1..Int.MAX_VALUE)
         for (seed in listOf(v, -v)) {
             testSameSeededRandoms(Random(seed), Random(seed), seed)
         }
@@ -335,7 +338,7 @@ class SeededRandomSmokeTest : RandomSmokeTest() {
 
     @Test
     fun sameLongSeed() {
-        val v = subject.nextLong(1, Long.MAX_VALUE)
+        val v = subject.nextLong(1..Long.MAX_VALUE)
         for (seed in listOf(v, -v)) {
             testSameSeededRandoms(Random(seed), Random(seed), seed)
         }
@@ -343,7 +346,7 @@ class SeededRandomSmokeTest : RandomSmokeTest() {
 
     @Test
     fun sameIntLongSeed() {
-        val v = subject.nextInt(1, Int.MAX_VALUE)
+        val v = subject.nextInt(1..Int.MAX_VALUE)
         for (seed in listOf(v, 0, -v)) {
             testSameSeededRandoms(Random(seed), Random(seed.toLong()), seed)
         }

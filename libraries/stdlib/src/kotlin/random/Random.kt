@@ -226,17 +226,24 @@ public abstract class Random {
         require(fromIndex in 0..array.size && toIndex in 0..array.size) { "fromIndex ($fromIndex) or toIndex ($toIndex) are out of range: 0..${array.size}." }
         require(fromIndex <= toIndex) { "fromIndex ($fromIndex) must be not greater than toIndex ($toIndex)." }
 
-        var v: Int = 0
-        var bits: Int = 0
-        for (i in fromIndex until toIndex) {
-            if (bits == 0) {
-                bits = if (toIndex - i >= 4) 32 else (toIndex - i) * 8
-                v = nextBits(bits)
-            }
-            array[i] = v.toByte()
-            v = v ushr 8
-            bits -= 8
+        val steps = (toIndex - fromIndex) / 4
+
+        var position = fromIndex
+        repeat(steps) {
+            val v = nextInt()
+            array[position] = v.toByte()
+            array[position + 1] = v.ushr(8).toByte()
+            array[position + 2] = v.ushr(16).toByte()
+            array[position + 3] = v.ushr(24).toByte()
+            position += 4
         }
+
+        val remainder = toIndex - position
+        val vr = nextBits(remainder * 8)
+        for (i in 0 until remainder) {
+            array[position + i] = vr.ushr(i * 8).toByte()
+        }
+
         return array
     }
 

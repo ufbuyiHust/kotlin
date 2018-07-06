@@ -98,6 +98,11 @@ class KotlinUastApiTest : AbstractKotlinUastTest() {
 
             assertEquals("java.lang.Runnable",
                          file.findElementByText<ULambdaExpression>("{/* Return */}").functionalInterfaceType?.canonicalText)
+
+            assertEquals(
+                "java.lang.Runnable",
+                file.findElementByText<ULambdaExpression>("{ /* SAM */ }").functionalInterfaceType?.canonicalText
+            )
         }
     }
 
@@ -366,6 +371,10 @@ class KotlinUastApiTest : AbstractKotlinUastTest() {
     fun testFunctionalType() {
         doTest("Lambdas") { _, file ->
             val lambda = file.findElementByTextFromPsi<ULambdaExpression>("{ it.isEmpty() }")
+            assertEquals(
+                "kotlin.jvm.functions.Function1<? super java.lang.String,? extends java.lang.Boolean>",
+                lambda.getExpressionType()?.canonicalText
+            )
             assertEquals(
                 "kotlin.jvm.functions.Function1<? super java.lang.String,? extends java.lang.Boolean>",
                 lambda.functionalInterfaceType?.canonicalText

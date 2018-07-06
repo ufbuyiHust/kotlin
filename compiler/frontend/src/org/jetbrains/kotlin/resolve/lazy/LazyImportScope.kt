@@ -28,6 +28,7 @@ import org.jetbrains.kotlin.incremental.components.LookupLocation
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.psi.KtImportDirective
+import org.jetbrains.kotlin.psi.KtImportLike
 import org.jetbrains.kotlin.psi.KtPsiUtil
 import org.jetbrains.kotlin.resolve.*
 import org.jetbrains.kotlin.resolve.scopes.DescriptorKindFilter
@@ -41,20 +42,20 @@ import org.jetbrains.kotlin.utils.addToStdlib.flatMapToNullable
 import java.util.*
 
 interface IndexedImports {
-    val imports: List<KtImportDirective>
-    fun importsForName(name: Name): Collection<KtImportDirective>
+    val imports: List<KtImportLike>
+    fun importsForName(name: Name): Collection<KtImportLike>
 }
 
-class AllUnderImportsIndexed(allImports: Collection<KtImportDirective>) : IndexedImports {
+class AllUnderImportsIndexed(allImports: Collection<KtImportLike>) : IndexedImports {
     override val imports = allImports.filter { it.isAllUnder }
     override fun importsForName(name: Name) = imports
 }
 
-class ExplicitImportsIndexed(allImports: Collection<KtImportDirective>) : IndexedImports {
+class ExplicitImportsIndexed(allImports: Collection<KtImportLike>) : IndexedImports {
     override val imports = allImports.filter { !it.isAllUnder }
 
-    private val nameToDirectives: ListMultimap<Name, KtImportDirective> by lazy {
-        val builder = ImmutableListMultimap.builder<Name, KtImportDirective>()
+    private val nameToDirectives: ListMultimap<Name, KtImportLike> by lazy {
+        val builder = ImmutableListMultimap.builder<Name, KtImportLike>()
 
         for (directive in imports) {
             val path = directive.importPath ?: continue // parse error
@@ -150,7 +151,7 @@ class LazyImportResolver(
         }
     }
 
-    override fun forceResolveImport(importDirective: KtImportDirective) {
+    override fun forceResolveImport(importDirective: KtImportLike) {
         forceResolveImportDirective(importDirective)
     }
 

@@ -30,7 +30,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.kotlin.KtNodeTypes;
 import org.jetbrains.kotlin.builtins.KotlinBuiltIns;
-import org.jetbrains.kotlin.descriptors.DeclarationDescriptor;
 import org.jetbrains.kotlin.kdoc.psi.api.KDocElement;
 import org.jetbrains.kotlin.lexer.KtToken;
 import org.jetbrains.kotlin.lexer.KtTokens;
@@ -225,20 +224,8 @@ public class KtPsiUtil {
     }
 
     @Nullable
-    public static Name getAliasName(@NotNull KtImportDirective importDirective) {
-        if (importDirective.isAllUnder()) {
-            return null;
-        }
-        String aliasName = importDirective.getAliasName();
-        KtExpression importedReference = importDirective.getImportedReference();
-        if (importedReference == null) {
-            return null;
-        }
-        KtSimpleNameExpression referenceExpression = getLastReference(importedReference);
-        if (aliasName == null) {
-            aliasName = referenceExpression != null ? referenceExpression.getReferencedName() : null;
-        }
-
+    public static Name getAliasName(@NotNull KtImportLike importDirective) {
+        String aliasName = importDirective.getImportedName();
         return aliasName != null && !aliasName.isEmpty() ? Name.identifier(aliasName) : null;
     }
 

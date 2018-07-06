@@ -27,7 +27,7 @@ import org.jetbrains.kotlin.psi.stubs.KotlinImportDirectiveStub;
 import org.jetbrains.kotlin.psi.stubs.elements.KtStubElementTypes;
 import org.jetbrains.kotlin.resolve.ImportPath;
 
-public class KtImportDirective extends KtElementImplStub<KotlinImportDirectiveStub> {
+public class KtImportDirective extends KtElementImplStub<KotlinImportDirectiveStub> implements KtImportLike {
 
     public KtImportDirective(@NotNull ASTNode node) {
         super(node);
@@ -59,18 +59,40 @@ public class KtImportDirective extends KtElementImplStub<KotlinImportDirectiveSt
         return getStubOrPsiChild(KtStubElementTypes.IMPORT_ALIAS);
     }
 
+    @Override
     @Nullable
     public String getAliasName() {
         KtImportAlias alias = getAlias();
         return alias != null ? alias.getName() : null;
     }
 
+    @Override
     public boolean isAllUnder() {
         KotlinImportDirectiveStub stub = getStub();
         if (stub != null) {
             return stub.isAllUnder();
         }
         return getNode().findChildByType(KtTokens.MUL) != null;
+    }
+
+    @Nullable
+    @Override
+    public ImportContent getImportContent() {
+        KtExpression reference = getImportedReference();
+        if (reference == null) return null;
+        return new ImportContent.ExpressionBased(reference);
+    }
+
+    @Nullable
+    @Override
+    public String getImportedName() {
+        return KtImportLike.DefaultImpls.getImportedName(this);
+    }
+
+    @NotNull
+    @Override
+    public KtFile getContainingFile() {
+        return (KtFile) super.getContainingFile();
     }
 
     @Nullable

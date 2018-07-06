@@ -25,6 +25,7 @@ import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.psi.KtImportDirective
+import org.jetbrains.kotlin.psi.KtImportLike
 import org.jetbrains.kotlin.psi.KtImportsFactory
 import org.jetbrains.kotlin.resolve.*
 import org.jetbrains.kotlin.resolve.scopes.*
@@ -50,7 +51,21 @@ class FileScopeFactory(
 ) {
     /* avoid constructing psi for default imports prematurely (time consuming in some scenarios) */
     private val defaultImports by storageManager.createLazyValue {
-        ktImportsFactory.createImportDirectivesNotCached(defaultImportProvider.defaultImports)
+        defaultImportProvider.defaultImports.map {
+            object : KtImportLike {
+                override val isAllUnder: Boolean
+                    get() = it.isAllUnder
+                override val containingFile: KtFile?
+                    get() = null
+                override val importContent: KtImportLike.ImportContent
+                    get() = KtImportLike.ImportContent.FqNameBased(it.fqName)
+                override val aliasName: String?
+                    get() = it.alias?.asString()
+
+                override val importedFqName: FqName?
+                    get() = it.fqName
+            }
+        }
     }
 
     fun createScopesForFile(file: KtFile, existingImports: ImportingScope? = null): FileScopes {

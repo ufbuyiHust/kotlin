@@ -1,4 +1,3 @@
-// IGNORE_BACKEND: JS_IR
 // WITH_RUNTIME
 // WITH_COROUTINES
 // COMMON_COROUTINES_TEST
@@ -53,7 +52,9 @@ fun box(): String {
     builder {
         callLocal()
     }
-    for (counter in 0 until 10) {
+    var _counter = 0
+    while (_counter < 10) {
+        val counter = _counter++
         if (i != counter + 1) return "Expected ${counter + 1}, got $i"
         proceed()
     }

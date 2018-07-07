@@ -1,4 +1,3 @@
-// IGNORE_BACKEND: JS_IR
 // WITH_RUNTIME
 // WITH_COROUTINES
 // COMMON_COROUTINES_TEST
@@ -18,7 +17,9 @@ fun builder(c: suspend Controller.() -> Unit) {
 }
 
 inline fun foo(x: (Int) -> Unit) {
-    for (i in 1..2) {
+    var _i = 1
+    while (_i <= 2) {
+        val i = _i++
         x(i)
     }
 }

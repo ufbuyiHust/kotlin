@@ -1,4 +1,3 @@
-// IGNORE_BACKEND: JS_IR
 // WITH_RUNTIME
 // WITH_COROUTINES
 // COMMON_COROUTINES_TEST
@@ -23,7 +22,8 @@ suspend fun baz1(): String {
 suspend fun baz2(): String {
     var x = null
 
-    for (i in 1..3) {
+    var i = 1
+    while (i++ <= 3) {
         x = null
     }
 

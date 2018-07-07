@@ -1,4 +1,3 @@
-// IGNORE_BACKEND: JS_IR
 // WITH_RUNTIME
 // WITH_COROUTINES
 // COMMON_COROUTINES_TEST
@@ -24,7 +23,9 @@ fun box(): String {
 
     builder {
         result += "-"
-        for (i in 0..10000) {
+        var _i = 0
+        while (_i <= 10000) {
+            val i = _i++
             if (i % 2 == 0) {
                 result += suspendHere().toString()
             }
@@ -36,7 +37,9 @@ fun box(): String {
     }
 
     var mustBe = "-"
-    for (i in 0..10000) {
+    var _i  = 0
+    while (_i <= 10000) {
+        val i = _i++
         if (i % 2 == 0) {
             mustBe += "1"
         }

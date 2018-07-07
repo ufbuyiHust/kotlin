@@ -830,7 +830,8 @@ internal class SuspendFunctionsLowering(val context: JsIrBackendContext): FileLo
                 JsIrBuilder.buildBoolean(context.irBuiltIns.booleanType, true)
             )
 
-            val suspendableNodes = collectSuspendableNodes(body)
+            val suspendableNodes = mutableSetOf<IrElement>()
+            val loweredBody = collectSuspendableNodes(body, suspendableNodes, context, function)
             val thisReceiver = (function.dispatchReceiverParameter as IrValueParameter).symbol
 
             val stateMachineBuilder = StateMachineBuilder(
@@ -846,7 +847,7 @@ internal class SuspendFunctionsLowering(val context: JsIrBackendContext): FileLo
                 suspendResult.symbol
             )
 
-            body.acceptVoid(stateMachineBuilder)
+            loweredBody.acceptVoid(stateMachineBuilder)
 
             stateMachineBuilder.finalizeStateMachine()
 

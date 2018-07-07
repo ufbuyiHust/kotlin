@@ -144,6 +144,8 @@ class JsIrBackendContext(
         override fun shouldGenerateHandlerParameterForDefaultBodyFun() = true
     }
 
+    val throwable = symbolTable.referenceClass(builtIns.throwable)
+
     private fun referenceOperators() = OperatorNames.ALL.map { name ->
         // TODO to replace KotlinType with IrType we need right equals on IrType
         name to irBuiltIns.primitiveTypes.fold(mutableMapOf<KotlinType, IrFunctionSymbol>()) { m, t ->
